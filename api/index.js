@@ -83,7 +83,7 @@ const sendVerificationMail = async (email, verificationToken) => {
     from: "Linkedin.com",
     to: email,
     subject: "Email verification",
-    text: `please click the verification link to verify your email: http://localhost/8000/${verificationToken}`,
+    text: `please click the verification link to verify your email: http://localhost:8000/${verificationToken}`,
   };
 
   //send the email

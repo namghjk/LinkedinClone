@@ -7,11 +7,13 @@ import {
   KeyboardAvoidingView,
   TextInput,
   Pressable,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
+import axios from "axios";
 
 const register = () => {
   const router = useRouter();
@@ -21,14 +23,26 @@ const register = () => {
   const [image, setImage] = useState("");
 
   //function handle Registration button
-  const handleRegister = () =>{
-    const user ={
+  const handleRegister = () => {
+    const user = {
       name: name,
       email: email,
       password: password,
-      image: image
-    }
-  }
+      image: image,
+    };
+
+    axios.post('http://localhost:8000/register',user).then((response) =>{
+      console.log(response.data);
+      Alert.alert("Registration successful","You have successfully registered");
+      setName("");
+      setEmail("");
+      setPassword("");
+      setImage("");
+    }).catch((error) => {
+      Alert.alert("Registration failed","Error: " + error.message);
+      console.log("error:", error)
+    })
+  };
 
   return (
     <SafeAreaView
