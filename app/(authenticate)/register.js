@@ -230,7 +230,7 @@ const register = () => {
             </Text>
           </Pressable>
           <Pressable
-            onPress={() => router.replace("/register")}
+            onPress={() => router.replace("/login")}
             style={{ marginTop: 15 }}
           >
             <Text style={{ textAlign: "center", color: "gray", fontSize: 16 }}>

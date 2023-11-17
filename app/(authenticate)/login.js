@@ -8,14 +8,43 @@ import {
   TextInput,
   Pressable,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const login = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const token = await AsyncStorage.getItem("authToken");
+        if (token) {
+          router.replace("/(tabs)/home");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    checkLoginStatus();
+  }, []);
+
+  const handleLogin = () => {
+    const user = {
+      email: email,
+      password: password,
+    };
+
+    axios.post("http://localhost:8000/login", user).then((response) => {
+      console.log(response);
+      const token = response.data.token;
+      AsyncStorage.setItem("authToken", token);
+      router.replace("/(tabs)/home");
+    });
+  };
   return (
     <SafeAreaView
       style={{ alignItems: "center", backgroundColor: "white", flex: 1 }}
@@ -120,6 +149,7 @@ const login = () => {
           </View>
           <View style={{ marginTop: 80 }}></View>
           <Pressable
+            onPress={handleLogin}
             style={{
               backgroundColor: "#0072b1",
               width: 200,

@@ -18,6 +18,10 @@ const userSchema = mongoose.Schema({
     type: String,
     default: false,
   },
+  image:{
+    type: String,
+    require: true,
+  },
   verificationToken: String,
   profileImage: String,
   userDescription: {
