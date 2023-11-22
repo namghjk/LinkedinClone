@@ -173,7 +173,7 @@ app.post("/login", async (req, res) => {
 });
 
 //user'profile
-app.get("/profile/:userId").then(async (req, res) => {
+app.post("/profile/:userId", async (req, res) => {
   try {
     const userId = req.param.userId;
 
@@ -188,7 +188,7 @@ app.get("/profile/:userId").then(async (req, res) => {
 });
 
 //users connected with user login
-app.get("/users/:userId").then(async (req, res) => {
+app.post("/users/:userId", async (req, res) => {
   try {
     const loggedInUserId = req.params.userId;
 
@@ -201,7 +201,7 @@ app.get("/users/:userId").then(async (req, res) => {
       return res.status(400).json({ message: "User not found" });
     }
 
-    //get the ID of connected user
+    //get the ID of who r connected to logged in user
     const connectedUserIds = loggedInUser.connections.map(
       (connection) => connection.id
     );
@@ -210,7 +210,7 @@ app.get("/users/:userId").then(async (req, res) => {
     const users = await User.find({
       _id: { $ne: loggedInUserId, $nin: connectedUserIds },
     });
-    res.status(200).json({ user });
+    res.status(200).json({ users });
   } catch (error) {
     console.log("Error retrieving users", error);
     res.status(500).json({ message: "Error retrieving users", error });
