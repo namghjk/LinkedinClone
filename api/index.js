@@ -171,3 +171,48 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ message: "Login failed" });
   }
 });
+
+//user'profile
+app.get("/profile/:userId").then(async (req, res) => {
+  try {
+    const userId = req.param.userId;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving user profile" });
+  }
+});
+
+//users connected with user login
+app.get("/users/:userId").then(async (req, res) => {
+  try {
+    const loggedInUserId = req.params.userId;
+
+    //fetch the logged user connections
+    const loggedInUser = await User.findById(loggedInUserId).populate(
+      "connections",
+      "_id"
+    );
+    if (!loggedInUser) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    //get the ID of connected user
+    const connectedUserIds = loggedInUser.connections.map(
+      (connection) => connection.id
+    );
+
+    //find the users who r not connected to the logged user id
+    const users = await User.find({
+      _id: { $ne: loggedInUserId, $nin: connectedUserIds },
+    });
+    res.status(200).json({ user });
+  } catch (error) {
+    console.log("Error retrieving users", error);
+    res.status(500).json({ message: "Error retrieving users", error });
+  }
+});
