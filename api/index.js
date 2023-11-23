@@ -173,14 +173,15 @@ app.post("/login", async (req, res) => {
 });
 
 //user'profile
-app.post("/profile/:userId", async (req, res) => {
+app.get("/profile/:userId", async (req, res) => {
   try {
-    const userId = req.param.userId;
+    const userId = req.params.userId;
 
     const user = await User.findById(userId);
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "user not found" });
     }
+
     res.status(200).json({ user });
   } catch (error) {
     res.status(500).json({ message: "Error retrieving user profile" });
@@ -188,7 +189,7 @@ app.post("/profile/:userId", async (req, res) => {
 });
 
 //users connected with user login
-app.post("/users/:userId", async (req, res) => {
+app.get("/users/:userId", async (req, res) => {
   try {
     const loggedInUserId = req.params.userId;
 
@@ -216,3 +217,4 @@ app.post("/users/:userId", async (req, res) => {
     res.status(500).json({ message: "Error retrieving users", error });
   }
 });
+

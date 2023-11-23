@@ -10,7 +10,7 @@ export default function Layout() {
         name="home"
         options={{
           tabBarLabel: "Home",
-          tabBarLabelStyle: { color: "black", fontSize:"14" },
+          tabBarLabelStyle: { color: "black", fontSize:14 },
           headerShown: false,
           tabBarIcon: ({ focused }) =>
             focused ? (
@@ -24,7 +24,7 @@ export default function Layout() {
         name="network"
         options={{
           tabBarLabel: "Network",
-          tabBarLabelStyle: {  color: "black", fontSize:"14" },
+          tabBarLabelStyle: {  color: "black", fontSize:14 },
           headerShown: false,
           tabBarIcon: ({ focused }) =>
             focused ? (
@@ -38,7 +38,7 @@ export default function Layout() {
         name="post"
         options={{
           tabBarLabel: "Post",
-          tabBarLabelStyle: {  color: "black", fontSize:"14" },
+          tabBarLabelStyle: {  color: "black", fontSize:14 },
           headerShown: false,
           tabBarIcon: ({ focused }) =>
             focused ? (
